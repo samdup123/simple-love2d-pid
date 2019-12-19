@@ -55,9 +55,9 @@ function love.load()
   love.graphics.setBackgroundColor(0.41, 0.53, 0.97)
   love.window.setMode(650, 650) -- set the window dimensions to 650 by 650
 
-  local p = 2000
-  local i = 1000
-  local d = 2000
+  local p = 8000
+  local i = 100
+  local d = 500
 
   max = 400
   min = -400
