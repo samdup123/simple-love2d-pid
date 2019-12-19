@@ -57,24 +57,29 @@ function love.load()
 
   local p = 8000
   local i = 100
-  local d = 500
+  local d = 75
 
   max = 400
   min = -400
 
   pid = Pid(p,i,d, 0, max, min)
 
-  applied_init_force = false
+  applied_init_force_for_a_while = false
+  init_force_time = 0
+  init_force_time_limit = .6
 end
  
  
 function love.update(dt)
-  world:update(dt * .75) -- this puts the world into motion
+  world:update(dt) -- this puts the world into motion
 
   objects.cart.body:setY(305)
 
-  if not applied_init_force then
-    applied_init_force = true
+  if not applied_init_force_for_a_while then
+    init_force_time = init_force_time + dt
+    if init_force_time > init_force_time_limit then
+      applied_init_force_for_a_while = true
+    end
     objects.cart.body:applyForce(math.random(min, max), 0)
   else
     local angle = objects.pole.body:getAngle()
