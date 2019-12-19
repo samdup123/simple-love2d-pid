@@ -3,7 +3,7 @@ return function(p, i, d, setpoint, max, min)
    local integral = 0
    local previous_error = 0
    return function (value, dt)
-      local error = setpoint - value
+      local error = value - setpoint
 
       local pOut = p * error
 
