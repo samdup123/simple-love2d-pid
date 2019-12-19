@@ -19,7 +19,7 @@ function love.load()
   objects.pole.body = love.physics.newBody(world, 325, 255, 'dynamic')
   objects.pole.shape = love.physics.newRectangleShape(2, 95)
   objects.pole.fixture = love.physics.newFixture(objects.pole.body,
-                                                 objects.pole.shape, 1)
+                                                 objects.pole.shape, .2)
   objects.pole.fixture:setCategory(1)
   objects.pole.fixture:setMask(2)
   objects.pole.body:setLinearDamping(.1)  
@@ -56,7 +56,7 @@ end
  
  
 function love.update(dt)
-  world:update(dt * .85) -- this puts the world into motion
+  world:update(dt * .75) -- this puts the world into motion
  
   if love.keyboard.isDown("right") then
     objects.cart.body:applyForce(600, 0)
