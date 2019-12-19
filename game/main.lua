@@ -7,7 +7,7 @@ function love.load()
   -- of 0 and vertical gravity of 9.81
   world = love.physics.newWorld(0, 9.81*64, true)
  
-  objects = {} -- table to hold all our physical objects
+  objects = {}
  
   objects.cart = {}
   objects.cart.body = love.physics.newBody(world, 325, 305, 'dynamic')
@@ -19,7 +19,7 @@ function love.load()
 
   objects.pole = {}
   objects.pole.body = love.physics.newBody(world, 325, 255, 'dynamic')
-  objects.pole.shape = love.physics.newRectangleShape(2, 95)
+  objects.pole.shape = love.physics.newRectangleShape(1, 95)
   objects.pole.fixture = love.physics.newFixture(objects.pole.body,
                                                  objects.pole.shape, .2)
   objects.pole.fixture:setCategory(1)
@@ -67,6 +67,11 @@ function love.load()
   applied_init_force_for_a_while = false
   init_force_time = 0
   init_force_time_limit = .6
+
+  -- local x1,y1, x2,y2 = objects.pole.shape:getBoundingBox()
+  -- print(x1,y1, x2,y2)
+  -- x1,y1, x2,y2 = objects.cart.shape:getBoundingBox()
+  -- print(x1,y1, x2,y2)
 end
  
  
