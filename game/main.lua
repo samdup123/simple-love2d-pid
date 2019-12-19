@@ -1,3 +1,5 @@
+local Pid = require('./pid')
+
 function love.load()
   -- the height of a meter our worlds will be 64px
   love.physics.setMeter(64)
@@ -52,19 +54,39 @@ function love.load()
  
   love.graphics.setBackgroundColor(0.41, 0.53, 0.97)
   love.window.setMode(650, 650) -- set the window dimensions to 650 by 650
+
+  local p = 2000
+  local i = 1000
+  local d = 2000
+
+  max = 400
+  min = -400
+
+  pid = Pid(p,i,d, 0, max, min)
+
+  applied_init_force = false
 end
  
  
 function love.update(dt)
   world:update(dt * .75) -- this puts the world into motion
- 
-  if love.keyboard.isDown("right") then
-    objects.cart.body:applyForce(600, 0)
-  elseif love.keyboard.isDown("left") then
-    objects.cart.body:applyForce(-600, 0)
-  end
 
   objects.cart.body:setY(305)
+
+  if not applied_init_force then
+    applied_init_force = true
+    objects.cart.body:applyForce(math.random(min, max), 0)
+  else
+    local angle = objects.pole.body:getAngle()
+    local force = pid(angle, dt)
+
+    if angle < -.62 or angle > .62 then
+      love.event.quit()
+    end
+    objects.cart.body:applyForce(force, 0)
+
+    print(force)
+  end
 end
  
 function love.draw()
