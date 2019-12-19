@@ -3,11 +3,15 @@ return function(p, i, d, setpoint, max, min)
    local integral = 0
    local previous_error = 0
    return function (value, dt)
-      local error = value - setpoint
+      local error = setpoint - value
+
       local pOut = p * error
+
       local integral = integral + (error * dt)
       local iOut = i * integral
-      local dOut = d * previous_error
+
+      local derivative = (error - previous_error) / dt
+      local dOut = d * derivative
       previous_error = error
 
       local output = pOut + iOut + dOut
