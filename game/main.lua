@@ -9,30 +9,44 @@ function love.load()
  
   objects.cart = {}
   objects.cart.body = love.physics.newBody(world, 325, 305, 'dynamic')
-  objects.cart.shape = love.physics.newRectangleShape(40, 40)
+  objects.cart.shape = love.physics.newRectangleShape(25, 25)
   objects.cart.fixture = love.physics.newFixture(objects.cart.body,
-                                                   objects.cart.shape, 1)
+                                                   objects.cart.shape, 5)
   objects.cart.body:setFixedRotation(true);
   objects.cart.fixture:setCategory(2)
 
   objects.pole = {}
-  objects.pole.body = love.physics.newBody(world, 325, 200, 'dynamic')
-  objects.pole.shape = love.physics.newRectangleShape(10, 175)
+  objects.pole.body = love.physics.newBody(world, 325, 235, 'dynamic')
+  objects.pole.shape = love.physics.newRectangleShape(2, 95)
   objects.pole.fixture = love.physics.newFixture(objects.pole.body,
                                                  objects.pole.shape, 1)
   objects.pole.fixture:setCategory(1)
   objects.pole.fixture:setMask(2)
-  -- objects.pole.body:setLinearDamping(.1)  
-  -- objects.pole.body:setInertia(.1)
-  -- objects.pole.body:setAngularDamping(4)
-  objects.pole.body:setAngle(math.rad(3)) 
+  objects.pole.body:setLinearDamping(.1)  
+  objects.pole.body:setInertia(.1)
+  objects.pole.body:setAngularDamping(4)
 
   objects.ground = {}
   objects.ground.body = love.physics.newBody(world, 325, 325, 'static')
   objects.ground.shape = love.physics.newRectangleShape(650, 10)
   objects.ground.fixture = love.physics.newFixture(objects.ground.body,
                                                             objects.ground.shape)   
-  objects.ground.fixture:setCategory(2)                                                                                       
+  objects.ground.fixture:setCategory(2)           
+
+  objects.leftWall = {}
+  objects.leftWall.body = love.physics.newBody(world, 0, 0, 'static')
+  objects.leftWall.shape = love.physics.newRectangleShape(10, 650)
+  objects.leftWall.fixture = love.physics.newFixture(objects.leftWall.body,
+                                                            objects.leftWall.shape)   
+  objects.leftWall.fixture:setCategory(2)  
+  
+  objects.rightWall = {}
+  objects.rightWall.body = love.physics.newBody(world, 650, 0, 'static')
+  objects.rightWall.shape = love.physics.newRectangleShape(10, 650)
+  objects.rightWall.fixture = love.physics.newFixture(objects.rightWall.body,
+                                                            objects.rightWall.shape)   
+  objects.rightWall.fixture:setCategory(2)   
+     
 
   love.physics.newRevoluteJoint(objects.cart.body, objects.pole.body, 325, 305, 325, 305, false)                                               
  
@@ -42,19 +56,15 @@ end
  
  
 function love.update(dt)
-  world:update(dt) -- this puts the world into motion
+  world:update(dt * .85) -- this puts the world into motion
  
   if love.keyboard.isDown("right") then
-    objects.cart.body:applyForce(400, 0)
+    objects.cart.body:applyForce(600, 0)
   elseif love.keyboard.isDown("left") then
-    objects.cart.body:applyForce(-400, 0)
+    objects.cart.body:applyForce(-600, 0)
   end
 
-  local sx, sy = objects.pole.body:getLinearVelocity()
-  local fx = -sx * .3
-  objects.pole.body:applyForce(fx, 0)
-
-  print(objects.pole.body:getAngle())
+  objects.cart.body:setY(305)
 end
  
 function love.draw()
@@ -68,8 +78,12 @@ function love.draw()
   love.graphics.polygon("fill", objects.pole.body:getWorldPoints(
                           objects.pole.shape:getPoints()))
 
-  -- set the drawing color to red for the ground
-  love.graphics.setColor(0.23, 0.03, 0.89)
+  -- set the drawing color for the ground
+  love.graphics.setColor(0.13, 0.67, 0.87)
   love.graphics.polygon("fill", objects.ground.body:getWorldPoints(
                           objects.ground.shape:getPoints()))
+  love.graphics.polygon("fill", objects.leftWall.body:getWorldPoints(
+                          objects.leftWall.shape:getPoints()))
+  love.graphics.polygon("fill", objects.rightWall.body:getWorldPoints(
+                          objects.rightWall.shape:getPoints()))
 end
