@@ -66,12 +66,11 @@ function love.load()
 
   applied_init_force_for_a_while = false
   init_force_time = 0
-  init_force_time_limit = .6
+  init_force_time_limit = .75
 
-  -- local x1,y1, x2,y2 = objects.pole.shape:getBoundingBox()
-  -- print(x1,y1, x2,y2)
-  -- x1,y1, x2,y2 = objects.cart.shape:getBoundingBox()
-  -- print(x1,y1, x2,y2)
+  cp_max = 50
+  cp_min = -50
+  cp_setpoint = 325
 end
  
  
@@ -93,9 +92,20 @@ function love.update(dt)
     if angle < -.62 or angle > .62 then
       love.event.quit()
     end
-    objects.cart.body:applyForce(force, 0)
 
-    print(force)
+    local correction = objects.cart.body:getX() - cp_setpoint
+
+    -- if correction > cp_max then
+    --   correction = cp_max
+    -- elseif correction < cp_min then
+    --   correction = cp_min
+    -- end
+
+
+    objects.cart.body:applyForce(force + correction, 0)
+
+    -- print(force)
+    print(correction)
   end
 end
  
