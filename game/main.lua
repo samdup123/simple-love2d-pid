@@ -16,7 +16,7 @@ function love.load()
   objects.cart.fixture:setCategory(2)
 
   objects.pole = {}
-  objects.pole.body = love.physics.newBody(world, 325, 235, 'dynamic')
+  objects.pole.body = love.physics.newBody(world, 325, 255, 'dynamic')
   objects.pole.shape = love.physics.newRectangleShape(2, 95)
   objects.pole.fixture = love.physics.newFixture(objects.pole.body,
                                                  objects.pole.shape, 1)
