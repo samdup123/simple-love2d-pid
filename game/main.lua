@@ -66,7 +66,7 @@ function love.load()
 
   applied_init_force_for_a_while = false
   init_force_time = 0
-  init_force_time_limit = .75
+  init_force_time_limit = .2
 
   cp_max = 50
   cp_min = -50
@@ -84,7 +84,7 @@ function love.update(dt)
     if init_force_time > init_force_time_limit then
       applied_init_force_for_a_while = true
     end
-    objects.cart.body:applyForce(math.random(min, max), 0)
+    objects.cart.body:applyForce(-400, 0)
   else
     local angle = objects.pole.body:getAngle()
     local force = pid(angle, dt)
@@ -104,8 +104,8 @@ function love.update(dt)
 
     objects.cart.body:applyForce(force + correction, 0)
 
-    -- print(force)
-    print(correction)
+    print(force)
+    -- print(correction)
   end
 end
  
