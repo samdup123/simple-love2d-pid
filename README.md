@@ -1,5 +1,5 @@
 # simple-love2d-pid
-Playing Around with a Partial Integral Derivate algorithm
+Playing Around with the Partial-Integral-Derivate controls algorithm
 
 ![demonstration gif](cartPolePid.gif)
 The PID is allowed to produce forces on the x axis of the green cart.
