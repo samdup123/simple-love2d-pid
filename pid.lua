@@ -1,7 +1,7 @@
 return function(p, i, d, setpoint, max, min)
-   print('hey')
    local integral = 0
    local previous_error = 0
+   
    return function (value, dt)
       local error = value - setpoint
 
@@ -12,7 +12,6 @@ return function(p, i, d, setpoint, max, min)
 
       local derivative = (error - previous_error) / dt
       local dOut = d * derivative
-      previous_error = error
 
       local output = pOut + iOut + dOut
 
@@ -22,6 +21,8 @@ return function(p, i, d, setpoint, max, min)
          output = min 
       end
 
+      previous_error = error
+      
       return output
    end
 end
